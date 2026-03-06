@@ -1,0 +1,74 @@
+name: Bug Report
+description: 报告一个Bug
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢报告Bug！请填写以下信息帮助我们修复问题。
+  
+  - type: input
+    id: version
+    attributes:
+      label: 版本信息
+      description: 请提供项目的版本号（如 v1.0.0）
+      placeholder: v1.0.0
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: python-version
+    attributes:
+      label: Python版本
+      options:
+        - "3.8"
+        - "3.9"
+        - "3.10"
+        - "3.11"
+        - "3.12"
+    validations:
+      required: true
+  
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 清晰简洁地描述Bug
+    validations:
+      required: true
+  
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 如何复现这个问题？
+      placeholder: |
+        1. 执行 '...'
+        2. 输入 '....'
+        3. 看到错误 '....'
+    validations:
+      required: true
+  
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望的行为
+      description: 描述你期望的结果
+  
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关日志
+      description: 请粘贴相关日志（使用```包裹）
+      render: shell
+  
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 确认事项
+      options:
+        - label: 我已经搜索了现有的Issues
+          required: true
+        - label: 这是一个Bug报告，不是功能请求
+          required: true

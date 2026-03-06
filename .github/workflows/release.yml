@@ -1,0 +1,24 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # 推送 v1.0.0 格式标签时触发
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 必需：允许创建 Release
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整提交历史以生成 Release Notes
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true  # 自动生成变更日志
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
