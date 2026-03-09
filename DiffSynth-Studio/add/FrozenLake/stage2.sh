@@ -37,5 +37,6 @@ accelerate launch --config_file examples/qwen_image/model_training/full/accelera
   --lora_rank 32 \
   --find_unused_parameters \
   --zero_cond_t \
+  --stage2_training \
   --dataset_num_workers 8 \
   --save_steps 100 \

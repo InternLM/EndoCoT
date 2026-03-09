@@ -168,7 +168,6 @@ class QwenImagePipeline(BasePipeline):
         self.scheduler.set_timesteps(num_inference_steps, denoising_strength=denoising_strength, dynamic_shift_len=(height // 16) * (width // 16), exponential_shift_mu=exponential_shift_mu)
         
         # Parameters
-        # dxl：为了让推理不出错，这里加了一个is final
         inputs_posi = {
             "prompt": prompt,
         }
@@ -355,7 +354,6 @@ class QwenImageUnit_Inpaint(PipelineUnit):
 
 class QwenImageUnit_PromptEmbedder(PipelineUnit):
     def __init__(self):
-        # dxl：这里把input_params_posi改了
         super().__init__(
             seperate_cfg=True,
             input_params_posi={"prompt": "prompt", "is_final": "is_final", "gt_prompt": "gt_prompt", "idx": "idx"},
@@ -365,7 +363,6 @@ class QwenImageUnit_PromptEmbedder(PipelineUnit):
             output_params=("prompt_emb", "prompt_emb_mask"),
             onload_model_names=("text_encoder",)
         )
-        # dxl：别让图像再做一遍了
         self.attention_mask = None
         self.pixel_values = None
         self.image_grid_thw = None
@@ -399,112 +396,13 @@ class QwenImageUnit_PromptEmbedder(PipelineUnit):
         split_hidden_states = self.extract_masked_hidden(hidden_states, model_inputs.attention_mask)
         split_hidden_states = [e[drop_idx:] for e in split_hidden_states]
         return split_hidden_states
-        
-    # dxl: 这里只能硬编码
-    # def encode_prompt_edit(self, pipe: QwenImagePipeline, prompt, edit_image):
-    #     template =  "<|im_start|>system\nDescribe the key features of the input image (color, shape, size, texture, objects, background), then explain how the user's text instruction should alter or modify the image. Generate a new image that meets the user's requirements while maintaining consistency with the original input where appropriate.<|im_end|>\n<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>{}<|im_end|>\n<|im_start|>assistant\n"
-    #     drop_idx = 64
-    #     txt = [template.format(e) for e in prompt]
-    #     model_inputs = pipe.processor(text=txt, images=edit_image, padding=True, return_tensors="pt").to(pipe.device)
-    #     hidden_states = pipe.text_encoder(input_ids=model_inputs.input_ids, attention_mask=model_inputs.attention_mask, pixel_values=model_inputs.pixel_values, image_grid_thw=model_inputs.image_grid_thw, output_hidden_states=True,)[-1]
-    #     split_hidden_states = self.extract_masked_hidden(hidden_states, model_inputs.attention_mask)
-    #     split_hidden_states = [e[drop_idx:] for e in split_hidden_states]
-    #     return split_hidden_states
 
-    # def encode_prompt_edit(self, pipe: QwenImagePipeline, prompt, edit_image):
-    #     drop_idx = 64
-    #     # # dxl: 可能需要先生成再更改prompt
-    #     # image_tag = "<|image_pad|>"
-    #     # if prompt[0].count(image_tag) != 1:
-    #     #     txt = template.format(prompt[0])
-    #     # else:
-    #     #     txt = prompt[0]
-    #     if type(prompt[0])==str:
-    #         template =  "<|im_start|>system\nDescribe the key features of the input image (color, shape, size, texture, objects, background), then explain how the user's text instruction should alter or modify the image. Generate a new image that meets the user's requirements while maintaining consistency with the original input where appropriate.<|im_end|>\n<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>{}<|im_end|>\n<|im_start|>assistant\n"
-    #         txt = template.format(prompt[0])
-    #         # dxl: 这里把输入变成embeds
-    #         model_inputs = pipe.processor(text=txt, images=edit_image, padding=True, return_tensors="pt").to(pipe.device)
-    #         embedding_layers = pipe.text_encoder.model.language_model.get_input_embeddings()
-    #         with torch.no_grad():
-    #             inputs_embeds = embedding_layers(model_inputs.input_ids)
-    #         self.attention_mask = model_inputs.attention_mask
-    #         self.pixel_values = model_inputs.pixel_values
-    #         self.image_grid_thw = model_inputs.image_grid_thw
-    #     else:
-    #         inputs_embeds= prompt[0]
-            
-    #     # # dxl: test use
-    #     # inputs_embeds = self.manual_generate(
-    #     #     pipe,
-    #     #     inputs_embeds=inputs_embeds,
-    #     #     max_new_tokens=2,
-    #     # )
-    #     # generated_embeds = inputs_embeds
-
-    #     try:
-    #         hidden_states, _ = pipe.text_encoder(inputs_embeds=inputs_embeds.clone(), attention_mask=self.attention_mask, pixel_values=self.pixel_values, image_grid_thw=self.image_grid_thw, output_hidden_states=True,)
-    #         # print(f"目前的shape是: {inputs_embeds.shape}")
-    #     except:
-    #         print(f"inputs_embeds的类型是: {type(inputs_embeds)}")
-    #         print(inputs_embeds)
-    #         ForkedPdb().set_trace()
-
-    #     hidden_states = hidden_states[-1]
-    #     split_hidden_states = self.extract_masked_hidden(hidden_states, self.attention_mask)
-    #     split_hidden_states = [e[drop_idx:] for e in split_hidden_states]
-        
-    #     # dxl： training use
-    #     try:
-    #         generated_embeds = self.manual_generate(
-    #             pipe,
-    #             inputs_embeds=inputs_embeds,
-    #             max_new_tokens=0,
-    #         )
-    #         # print(f"目前prompt是: {generated_prompt}")
-        
-    #     except Exception as e:
-    #         print(f"发生错误: {type(e).__name__} - {e}")
-    #         print(inputs_embeds.shape)
-    #         assert False
-
-    #     # dxl: 用来更新prompt
-    #     try: 
-    #         return split_hidden_states, generated_embeds
-    #     except:
-    #         print("[WARNING] 并没有正确更新prompt")
-    #         return split_hidden_states
-
-    # def manual_generate(
-    #     self, 
-    #     pipe,
-    #     inputs_embeds,
-    #     max_new_tokens=20,
-    # ):
-
-    #     for step in range(max_new_tokens):
-
-    #         outputs, next_token = pipe.text_encoder(
-    #             inputs_embeds=inputs_embeds,
-    #             attention_mask=self.attention_mask,
-    #             pixel_values=self.pixel_values,
-    #             image_grid_thw=self.image_grid_thw,
-    #             output_hidden_states=False,
-    #         )
-
-    #         new_mask_element = torch.ones((1, 1), device=self.attention_mask.device, dtype=self.attention_mask.dtype)
-    #         self.attention_mask = torch.cat([self.attention_mask, new_mask_element], dim=1)
-    #         inputs_embeds = torch.cat([inputs_embeds, outputs[-1][:,-1,:].unsqueeze(1).detach()], dim=1)
-
-    #     return inputs_embeds
-
-    # dxl: version2: 我希望在这里加一下关于eos生成的问题
     def encode_prompt_edit(self, pipe: QwenImagePipeline, prompt, edit_image, is_final, gt_prompt=None, idx=None):
 
         drop_idx = 64
         if type(prompt[0])==str:
             template =  "<|im_start|>system\nDescribe the key features of the input image (color, shape, size, texture, objects, background), then explain how the user's text instruction should alter or modify the image. Generate a new image that meets the user's requirements while maintaining consistency with the original input where appropriate.<|im_end|>\n<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>{}<|im_end|>\n<|im_start|>assistant\n"
             txt = template.format(prompt[0])
-            # dxl: 这里把输入变成embeds
             model_inputs = pipe.processor(text=txt, images=edit_image, padding=True, return_tensors="pt").to(pipe.device)
             embedding_layers = pipe.text_encoder.model.language_model.get_input_embeddings()
             with torch.no_grad():
@@ -521,7 +419,7 @@ class QwenImageUnit_PromptEmbedder(PipelineUnit):
             if idx!=None:
                 iter_times = idx-2
             else:
-                iter_times = 0
+                iter_times = 50
                 
             with torch.no_grad():
                 inputs_embeds = self.manual_generate_eval(
@@ -530,34 +428,29 @@ class QwenImageUnit_PromptEmbedder(PipelineUnit):
                     max_new_tokens=iter_times,
                 ).detach()
             
-            # dxl: 只更新最后两个token
+            # dxl: only update the last 2 tokens
             if idx!=None:
                 inputs_embeds = self.manual_generate_eval(
                     pipe,
                     inputs_embeds=inputs_embeds,
-                    max_new_tokens=50,
+                    max_new_tokens=2,
                 )
 
             generated_embeds = inputs_embeds
 
         try:
             hidden_states, _ = pipe.text_encoder(inputs_embeds=inputs_embeds.clone(), attention_mask=self.attention_mask, pixel_values=self.pixel_values, image_grid_thw=self.image_grid_thw, output_hidden_states=True,)
-            # print(f"目前的shape是: {inputs_embeds.shape}")
         except:
-            print(f"inputs_embeds的类型是: {type(inputs_embeds)}")
+            print(f"inputs_embeds's type is : {type(inputs_embeds)}")
             print(inputs_embeds)
             ForkedPdb().set_trace()
 
-        # dxl: version 5 如果要每个step加mse loss，那可能得记录下现在到哪里了，实验证明没啥用）
-
-        # dxl: version 4: 和结束prompt对齐算loss，测试下这个
         if is_final==True:
             try:
                 template =  "<|im_start|>system\nDescribe the key features of the input image (color, shape, size, texture, objects, background), then explain how the user's text instruction should alter or modify the image. Generate a new image that meets the user's requirements while maintaining consistency with the original input where appropriate.<|im_end|>\n<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>{}<|im_end|>\n<|im_start|>assistant\n"
                 gt_txt = template.format(gt_prompt[0])
                 model_inputs = pipe.processor(text=gt_txt, images=edit_image, padding=True, return_tensors="pt").to(pipe.device)
                 gt_hidden_states = pipe.text_encoder(input_ids=model_inputs.input_ids, attention_mask=model_inputs.attention_mask, pixel_values=model_inputs.pixel_values, image_grid_thw=model_inputs.image_grid_thw, output_hidden_states=True,)[0][-1]
-                # dxl: 用个简单的mse loss吧
                 eos_loss = F.mse_loss(hidden_states[-1][:,-1,:], gt_hidden_states[:,-1,:])
             except:
                 eos_loss = None
@@ -568,103 +461,26 @@ class QwenImageUnit_PromptEmbedder(PipelineUnit):
         split_hidden_states = self.extract_masked_hidden(hidden_states, self.attention_mask)
         split_hidden_states = [e[drop_idx:] for e in split_hidden_states]
         
-        # dxl：training use
+        # dxl：training
         if is_final!=None and idx==None:
             try:
                 generated_embeds, _ = self.manual_generate(
                     pipe,
                     inputs_embeds=inputs_embeds,
                     is_final=is_final,
-                    max_new_tokens=100,
+                    max_new_tokens=2,
                 )
-                # print(f"目前prompt是: {generated_prompt}")
             except Exception as e:
-                print(f"发生错误: {type(e).__name__} - {e}")
+                print(f"Error!: {type(e).__name__} - {e}")
                 print(inputs_embeds.shape)
                 assert False
 
-        # dxl: 用来更新prompt
         try: 
             return split_hidden_states, generated_embeds, eos_loss
         except:
-            print("[WARNING] 并没有正确更新prompt, 或者在inference")
+            print(f"[WARNING] Prompt was not updated correctly for inference.")
             return split_hidden_states
 
-    # # dxl: version2: 用来加eos loss的   
-    # def manual_generate(
-    #     self, 
-    #     pipe,
-    #     is_final,
-    #     inputs_embeds,
-    #     max_new_tokens=20,
-    # ):
-
-    #     eos_loss = None
-
-    #     for step in range(max_new_tokens):
-
-    #         outputs, next_token_logits = pipe.text_encoder(
-    #             inputs_embeds=inputs_embeds,
-    #             attention_mask=self.attention_mask,
-    #             pixel_values=self.pixel_values,
-    #             image_grid_thw=self.image_grid_thw,
-    #             output_hidden_states=False,
-    #         )
-
-    #         new_mask_element = torch.ones((1, 1), device=self.attention_mask.device, dtype=self.attention_mask.dtype)
-    #         self.attention_mask = torch.cat([self.attention_mask, new_mask_element], dim=1)
-    #         inputs_embeds = torch.cat([inputs_embeds, outputs[-1][:,-1,:].unsqueeze(1).detach()], dim=1)
-
-    #     # dxl: 这里对最后一张图来算loss
-    #     if is_final and max_new_tokens!=0:
-    #         eos_token_id = pipe.tokenizer.eos_token_id
-    #         device = next_token_logits.device
-    #         target = torch.tensor([eos_token_id], device=device).expand(next_token_logits.shape[0])
-    #         eos_loss = F.cross_entropy(next_token_logits, target)
-    #     elif max_new_tokens!=0:
-    #         eos_token_id = pipe.tokenizer.eos_token_id
-    #         device = next_token_logits.device
-    #         target_not_eos = torch.full((next_token_logits.shape[0],), eos_token_id, device=device)
-    #         eos_penalty = torch.log(1 - torch.softmax(next_token_logits, dim=-1)[:, eos_token_id] + 1e-8)
-    #         eos_loss = -eos_penalty.mean()
-
-    #     return inputs_embeds, eos_loss
-
-    # # dxl: version4: 训个mlp试试） 
-    # def manual_generate(
-    #     self, 
-    #     pipe,
-    #     is_final,
-    #     inputs_embeds,
-    #     max_new_tokens=100,
-    # ):
-    #     eos_loss = None
-
-    #     for step in range(max_new_tokens):
-
-    #         outputs, next_token_logits = pipe.text_encoder(
-    #             inputs_embeds=inputs_embeds,
-    #             attention_mask=self.attention_mask,
-    #             pixel_values=self.pixel_values,
-    #             image_grid_thw=self.image_grid_thw,
-    #             output_hidden_states=False,
-    #         )
-
-    #         new_mask_element = torch.ones((1, 1), device=self.attention_mask.device, dtype=self.attention_mask.dtype)
-    #         self.attention_mask = torch.cat([self.attention_mask, new_mask_element], dim=1)
-    #         inputs_embeds = torch.cat([inputs_embeds, outputs[-1][:,-1,:].unsqueeze(1).detach()], dim=1)
-
-    #     pred_logits = pipe.mlp(outputs[-1][:,-1,:])
-    #     if is_final and max_new_tokens!=0:
-    #         target = torch.ones_like(pred_logits)
-    #     elif max_new_tokens!=0:
-    #         target = torch.zeros_like(pred_logits)
-        
-    #     # print(f"Current pred logits is {pred_logits}. GT is {target}")
-    #     eos_loss = F.binary_cross_entropy_with_logits(pred_logits, target)
-    #     return inputs_embeds, eos_loss
-
-    # dxl: version3: 直接scale final loss试试 
     def manual_generate(
         self, 
         pipe,
@@ -711,20 +527,6 @@ class QwenImageUnit_PromptEmbedder(PipelineUnit):
             self.attention_mask = torch.cat([self.attention_mask, new_mask_element], dim=1)
             inputs_embeds = torch.cat([inputs_embeds, outputs[-1][:,-1,:].unsqueeze(1).detach()], dim=1)
 
-            # dxl: version 2
-            # next_token_id = next_token_logits.argmax(dim=-1)
-            # if next_token_id==eos_token_id:
-            #     print(f"Early stop! At index {idx}")
-            #     break
-
-            # # dxl: version 4, 用mlp来看停不停止, 先只对bs=1来做吧
-            # pipe.mlp.to(inputs_embeds.device).to(inputs_embeds.dtype)
-            # pred_logits = pipe.mlp(outputs[-1][:,-1,:])[0]
-            # print(f"Current logits: {torch.sigmoid(pred_logits)}")
-            # if torch.sigmoid(pred_logits) > 0.8:
-            #     print(f"Early stop! At index {idx}")
-            #     break
-
         return inputs_embeds
     
     def encode_prompt_edit_multi(self, pipe: QwenImagePipeline, prompt, edit_image):
@@ -740,7 +542,6 @@ class QwenImageUnit_PromptEmbedder(PipelineUnit):
         split_hidden_states = [e[drop_idx:] for e in split_hidden_states]
         return split_hidden_states
 
-    # dxl: version2 这里修改了下，来判断是不是最后一张图
     def process(self, pipe: QwenImagePipeline, prompt, is_final, gt_prompt, edit_image=None, idx=None) -> dict:
         pipe.load_models_to_device(self.onload_model_names)
         if pipe.text_encoder is not None:
@@ -749,7 +550,6 @@ class QwenImageUnit_PromptEmbedder(PipelineUnit):
                 split_hidden_states = self.encode_prompt(pipe, prompt)
             elif isinstance(edit_image, Image.Image):
                 # split_hidden_states = self.encode_prompt_edit(pipe, prompt, edit_image)
-                # dxl: 用来更新prompt
                 try:
                     split_hidden_states, new_prompt, eos_loss = self.encode_prompt_edit(pipe, prompt, edit_image, is_final, gt_prompt, idx)
                 except:

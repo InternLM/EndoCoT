@@ -82,19 +82,6 @@ class UnifiedDataset(torch.utils.data.Dataset):
             metadata = pandas.read_csv(metadata_path)
             self.data = [metadata.iloc[i].to_dict() for i in range(len(metadata))]
 
-    # def __getitem__(self, data_id):
-    #     if self.load_from_cache:
-    #         data = self.cached_data[data_id % len(self.cached_data)]
-    #         data = self.cached_data_operator(data)
-    #     else:
-    #         data = self.data[data_id % len(self.data)].copy()
-    #         for key in self.data_file_keys:
-    #             if key in data:
-    #                 if key in self.special_operator_map:
-    #                     data[key] = self.special_operator_map[key](data[key])
-    #                 elif key in self.data_file_keys:
-    #                     data[key] = self.main_data_operator(data[key])
-    #     return data
 
     def __getitem__(self, data_id):
         if self.load_from_cache:
@@ -109,8 +96,6 @@ class UnifiedDataset(torch.utils.data.Dataset):
                     if key in self.special_operator_map:
                         data[key] = self.special_operator_map[key](data[key])
                     elif key in self.data_file_keys:
-                        # dxl: 这里针对我的任务硬编码了下
-                        # start image是用来标记是不是step0 图片的
                         if key not in ["start_image"]:
                             data[key] = self.main_data_operator(data[key])
 

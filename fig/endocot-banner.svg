@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="280" viewBox="0 0 900 280">
+  <defs>
+    <!-- Background gradient: deep navy to dark purple -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#080c18"/>
+      <stop offset="45%"  stop-color="#0e1225"/>
+      <stop offset="100%" stop-color="#130d2e"/>
+    </linearGradient>
+
+    <!-- Title gradient: white to light purple -->
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e9d5ff"/>
+    </linearGradient>
+
+    <!-- "Endogenous" accent gradient: purple to pink -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#f9a8d4"/>
+    </linearGradient>
+
+    <!-- Glow filter for title -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft glow blob filter -->
+    <filter id="blobGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="35"/>
+    </filter>
+
+    <!-- Wave clip -->
+    <clipPath id="bannerClip">
+      <rect width="900" height="280" rx="8"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#bannerClip)">
+
+    <!-- Background -->
+    <rect width="900" height="280" fill="url(#bg)"/>
+
+    <!-- Subtle grid lines (latent space) -->
+    <g stroke="rgba(100,120,200,0.06)" stroke-width="1">
+      <line x1="0" y1="40"  x2="900" y2="40"/>
+      <line x1="0" y1="80"  x2="900" y2="80"/>
+      <line x1="0" y1="120" x2="900" y2="120"/>
+      <line x1="0" y1="160" x2="900" y2="160"/>
+      <line x1="0" y1="200" x2="900" y2="200"/>
+      <line x1="0" y1="240" x2="900" y2="240"/>
+      <line x1="100" y1="0" x2="100" y2="280"/>
+      <line x1="200" y1="0" x2="200" y2="280"/>
+      <line x1="300" y1="0" x2="300" y2="280"/>
+      <line x1="400" y1="0" x2="400" y2="280"/>
+      <line x1="500" y1="0" x2="500" y2="280"/>
+      <line x1="600" y1="0" x2="600" y2="280"/>
+      <line x1="700" y1="0" x2="700" y2="280"/>
+      <line x1="800" y1="0" x2="800" y2="280"/>
+    </g>
+
+    <!-- Purple glow blob left -->
+    <ellipse cx="180" cy="120" rx="200" ry="140" fill="rgba(99,74,181,0.18)" filter="url(#blobGlow)"/>
+
+    <!-- Pink glow blob right -->
+    <ellipse cx="720" cy="160" rx="160" ry="110" fill="rgba(244,114,182,0.12)" filter="url(#blobGlow)"/>
+
+    <!-- Center glow -->
+    <ellipse cx="450" cy="130" rx="280" ry="100" fill="rgba(79,70,229,0.08)" filter="url(#blobGlow)"/>
+
+    <!-- Diffusion arc rings (left) -->
+    <circle cx="120" cy="80" r="55"  fill="none" stroke="rgba(139,92,246,0.2)"  stroke-width="1"/>
+    <circle cx="120" cy="80" r="90"  fill="none" stroke="rgba(139,92,246,0.1)"  stroke-width="1"/>
+    <circle cx="120" cy="80" r="130" fill="none" stroke="rgba(139,92,246,0.05)" stroke-width="1"/>
+
+    <!-- Diffusion arc rings (right) -->
+    <circle cx="780" cy="200" r="45"  fill="none" stroke="rgba(249,168,212,0.2)"  stroke-width="1"/>
+    <circle cx="780" cy="200" r="80"  fill="none" stroke="rgba(249,168,212,0.1)"  stroke-width="1"/>
+    <circle cx="780" cy="200" r="120" fill="none" stroke="rgba(249,168,212,0.05)" stroke-width="1"/>
+
+    <!-- Noise dots (sparse, simulated diffusion noise) -->
+    <g fill="rgba(180,180,255,0.25)">
+      <circle cx="60"  cy="30"  r="1"/>
+      <circle cx="145" cy="18"  r="1.2"/>
+      <circle cx="230" cy="55"  r="0.8"/>
+      <circle cx="310" cy="22"  r="1"/>
+      <circle cx="390" cy="40"  r="1.2"/>
+      <circle cx="480" cy="15"  r="0.8"/>
+      <circle cx="560" cy="38"  r="1"/>
+      <circle cx="640" cy="20"  r="1.2"/>
+      <circle cx="730" cy="48"  r="0.8"/>
+      <circle cx="820" cy="25"  r="1"/>
+      <circle cx="870" cy="55"  r="1.2"/>
+      <circle cx="40"  cy="210" r="1"/>
+      <circle cx="110" cy="245" r="1.2"/>
+      <circle cx="200" cy="225" r="0.8"/>
+      <circle cx="820" cy="240" r="1"/>
+      <circle cx="860" cy="210" r="1.2"/>
+    </g>
+
+    <!-- Top wave overlay -->
+    <path d="M0,0 C180,55 360,5 540,30 C720,55 810,10 900,35 L900,0 Z"
+          fill="rgba(8,12,24,0.5)"/>
+
+    <!-- Bottom wave -->
+    <path d="M0,280 C150,240 300,265 450,248 C600,230 750,258 900,245 L900,280 Z"
+          fill="rgba(8,12,24,0.6)"/>
+
+    <!-- Second bottom wave layer (lighter) -->
+    <path d="M0,280 C200,255 400,272 600,260 C750,250 850,268 900,260 L900,280 Z"
+          fill="rgba(19,13,46,0.4)"/>
+
+    <!-- Label text -->
+    <text x="450" y="80" 
+          font-family="'Courier New', monospace" 
+          font-size="10" 
+          font-weight="400"
+          letter-spacing="4"
+          fill="rgba(167,139,250,0.65)" 
+          text-anchor="middle">
+      DIFFUSION · CHAIN-OF-THOUGHT · LATENT REASONING
+    </text>
+
+    <!-- Main title: Endo -->
+    <text x="266" y="158"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="72"
+          font-weight="700"
+          fill="url(#titleGrad)"
+          filter="url(#glow)"
+          text-anchor="middle">Endo</text>
+
+    <!-- Main title: CoT (accent gradient) -->
+    <text x="580" y="158"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="72"
+          font-weight="700"
+          fill="url(#accentGrad)"
+          filter="url(#glow)"
+          text-anchor="middle">CoT</text>
+
+    <!-- Desc line -->
+    <text x="450" y="195"
+          font-family="'Courier New', monospace"
+          font-size="12.5"
+          font-weight="400"
+          letter-spacing="0.5"
+          fill="rgba(203,213,240,0.55)"
+          text-anchor="middle">
+      Scaling
+      <tspan fill="rgba(196,181,253,0.9)" font-style="italic">Endogenous</tspan>
+      Chain-of-Thought Reasoning in Diffusion Models
+    </text>
+
+    <!-- CoT step dots at bottom -->
+    <g>
+      <circle cx="315" cy="232" r="2.5" fill="rgba(139,92,246,0.7)"/>
+      <line x1="321" y1="232" x2="333" y2="232" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+      <circle cx="339" cy="232" r="2.5" fill="rgba(139,92,246,0.65)"/>
+      <line x1="345" y1="232" x2="357" y2="232" stroke="rgba(160,110,240,0.3)" stroke-width="1"/>
+      <circle cx="363" cy="232" r="2.5" fill="rgba(150,100,240,0.65)"/>
+      <line x1="369" y1="232" x2="381" y2="232" stroke="rgba(180,120,230,0.3)" stroke-width="1"/>
+      <circle cx="387" cy="232" r="2.5" fill="rgba(167,120,235,0.65)"/>
+      <line x1="393" y1="232" x2="405" y2="232" stroke="rgba(200,140,220,0.3)" stroke-width="1"/>
+      <circle cx="411" cy="232" r="2.5" fill="rgba(190,130,228,0.65)"/>
+      <line x1="417" y1="232" x2="429" y2="232" stroke="rgba(210,150,215,0.3)" stroke-width="1"/>
+      <circle cx="435" cy="232" r="2.5" fill="rgba(210,145,220,0.7)"/>
+      <line x1="441" y1="232" x2="453" y2="232" stroke="rgba(225,155,210,0.3)" stroke-width="1"/>
+      <circle cx="459" cy="232" r="2.5" fill="rgba(225,150,215,0.7)"/>
+      <line x1="465" y1="232" x2="477" y2="232" stroke="rgba(235,160,205,0.3)" stroke-width="1"/>
+      <circle cx="483" cy="232" r="2.5" fill="rgba(238,155,210,0.7)"/>
+      <line x1="489" y1="232" x2="501" y2="232" stroke="rgba(245,165,200,0.3)" stroke-width="1"/>
+      <circle cx="507" cy="232" r="2.5" fill="rgba(245,160,200,0.75)"/>
+      <line x1="513" y1="232" x2="525" y2="232" stroke="rgba(248,170,195,0.3)" stroke-width="1"/>
+      <circle cx="531" cy="232" r="2.5" fill="rgba(249,165,196,0.8)"/>
+      <line x1="537" y1="232" x2="549" y2="232" stroke="rgba(249,168,212,0.4)" stroke-width="1"/>
+      <!-- Final dot: pink, slightly larger -->
+      <circle cx="555" cy="232" r="3.5" fill="rgba(249,168,212,0.95)"/>
+    </g>
+
+  </g>
+</svg>

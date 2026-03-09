@@ -1,7 +1,6 @@
 import torch
 from typing import Optional, Union
 
-# dxl: 我试一下能不能改成latent reasoning
 class QwenImageTextEncoder(torch.nn.Module):
     def __init__(self):
         super().__init__()

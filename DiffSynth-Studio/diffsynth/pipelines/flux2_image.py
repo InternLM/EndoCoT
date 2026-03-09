@@ -167,7 +167,6 @@ class Flux2Unit_PromptEmbedder(PipelineUnit):
             for prompt in cleaned_txt
         ]
 
-    # dxl：flux的话在这里动手脚
     def get_mistral_3_small_prompt_embeds(
         self,
         text_encoder,
