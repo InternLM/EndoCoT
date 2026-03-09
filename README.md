@@ -42,15 +42,15 @@
 
 ## 🌟Highlight
 
-![main](fig\main.jpg)
+![main](fig/main.jpg)
 
 - EndoCoT is a reasoning paradigm for diffusion models that enables step-by-step inference. It outperforms conventional training methods on Qwen-Image-Edit-2511.
 
-![exp](fig\exp.png)
+![exp](fig/exp.png)
 
 - And provide transparent, intermediate reasoning trajectories.
 
-![case](fig\case.jpg)
+![case](fig/case.jpg)
 
 ## ⚡Quick Start
 
@@ -69,11 +69,9 @@ pip install -r requirments.txt
 
 1. Download the ckpt:
 
-   > You may find our pretrained weights at: [**EndoCoT**](https://huggingface.co/InternLM/EndoCoT)
-   >
-   > > [!NOTE]
-   > >
-   > >  Following the configuration of *[**Diffthinker**](https://github.com/lcqysl/DiffThinker)*, we provide a customized checkpoint for **Qwen-Image-Edit**. This checkpoint has been merged from the original `safetensors` to ensure compatibility with [**Diffsynth-Studio** ]([modelscope/DiffSynth-Studio: Enjoy the magic of Diffusion models!](https://github.com/modelscope/DiffSynth-Studio))training. Please use the checkpoint provided in this repository instead of the official version for correct loading and inference.
+   - You may find our pretrained weights at: [**EndoCoT**](https://huggingface.co/InternLM/EndoCoT)
+
+   >  Following the configuration of *[**Diffthinker**](https://github.com/lcqysl/DiffThinker)*, we provide a customized checkpoint for **Qwen-Image-Edit**. This checkpoint has been merged from the original `safetensors` to ensure compatibility with [**Diffsynth-Studio** ]([modelscope/DiffSynth-Studio: Enjoy the magic of Diffusion models!](https://github.com/modelscope/DiffSynth-Studio))training. Please use the checkpoint provided in this repository instead of the official version for correct loading and inference.
 
 2. Test Single Case
 
@@ -101,11 +99,9 @@ pip install -r requirments.txt
 
 1. Download the datasets & metadata.csv
 
-   > You may find our training data at: [**EndoCoT dataset**](https://huggingface.co/datasets/InternLM/EndoCoT)
-   >
-   > > [!NOTE]
-   > >
-   > > Since the metadata uses relative paths, please ensure the dataset files are placed in the same directory as `metadata.csv`
+   - You may find our training data at: [**EndoCoT dataset**](https://huggingface.co/datasets/InternLM/EndoCoT)
+
+   > Since the metadata uses relative paths, please ensure the dataset files are placed in the same directory as `metadata.csv`
 
 2. Train your model
 
