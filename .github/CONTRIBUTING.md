@@ -1,12 +1,17 @@
-## 贡献流程
-1. Fork 仓库
-2. 创建分支：git checkout -b feat/your-feature-name
-3. 提交更改：git commit -m "feat: add new feature"
-4. 推送到 Fork：git push origin feat/your-feature-name
-5. 创建 Pull Request 到主仓库的 main 分支
+## Contribution Workflow
 
-## Commit Message 规范
-我们使用 Conventional Commits：
+1. **Fork** the repository.
+2. **Create a branch**: `git checkout -b feat/your-feature-name`
+3. **Commit your changes**: `git commit -m "feat: add new feature"`
+4. **Push to your Fork**: `git push origin feat/your-feature-name`
+5. **Create a Pull Request** targeting the `main` branch of the upstream repository.
+
+## Commit Message Convention
+
+We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+
+Plaintext
+
 ```
 <type>[optional scope]: <description>
 
@@ -15,15 +20,19 @@
 [optional footer(s)]
 ```
 
-类型说明：
-- feat/ - 新功能
-- fix/ - Bug 修复
-- docs/ - 文档更新
-- refactor/ - 代码重构
-- test/ - 测试相关
-- chore/ - 杂项（依赖更新等）
+### Type Definitions
 
-示例：
+- **feat**: A new feature.
+- **fix**: A bug fix.
+- **docs**: Documentation only changes.
+- **refactor**: A code change that neither fixes a bug nor adds a feature.
+- **test**: Adding missing tests or correcting existing tests.
+- **chore**: Changes to the build process or auxiliary tools and libraries.
+
+### Example
+
+Plaintext
+
 ```
 feat(auth): add JWT token validation
 
@@ -33,14 +42,13 @@ feat(auth): add JWT token validation
 Closes #123
 ```
 
-## Code Review 流程
-1. 所有 PR 必须至少 1 个 approve 才能合并
-2. CI 必须通过
-3. 解决所有评论后才能合并
-4. 使用 "Squash and merge" 合并
+## Code Review Process
 
-## 发布流程
-只有 maintainer 可以发布新版本：
-```
-make release VERSION=1.0.0
-```
+- All PRs must receive at least **one approval** before merging.
+- All **CI checks** must pass.
+- All review comments must be addressed/resolved.
+- We use **"Squash and merge"** for all PRs.
+
+## Release Process
+
+Only maintainers are authorized to release new versions: `make release VERSION=1.0.0`
