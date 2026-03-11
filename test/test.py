@@ -1,5 +1,6 @@
 import torch
-import os, sys, argparse
+import os
+import argparse
 from safetensors.torch import load_file
 from diffusers.utils import load_image
 from PIL import Image
@@ -8,8 +9,8 @@ from diffsynth.pipelines.qwen_image import QwenImagePipeline, ModelConfig
 def parse_args():
     parser = argparse.ArgumentParser(description="EndoCoT Inference Script")
     parser.add_argument("--model_root", type=str, default="/path/to/EndoCoT/ckpts_fix", help="Root directory of the merged checkpoints")
-    parser.add_argument("--lora_path", type=str, required=True, help="Path to the primary LoRA .safetensors file")
-    parser.add_argument("--lora_path_aux", type=str, default=None, help="Path to auxiliary LoRA (e.g., Stage 2/3)")
+    
+    parser.add_argument("--lora_paths", type=str, nargs='+', required=True, help="List of LoRA .safetensors files")
     
     parser.add_argument("--task", type=str, default="Edit", choices=["Sudoku", "FrozenLake", "TSP", "Maze"], help="Task type")
     parser.add_argument("--input_image", type=str, required=True, help="Path to the input image")
@@ -54,19 +55,22 @@ def main():
         tokenizer_config=ModelConfig(path=config["tokenizer"]),
     )
 
-    for lora in [args.lora_path_aux, args.lora_path]:
-        if lora and os.path.exists(lora):
+    for lora in args.lora_paths:
+        if os.path.exists(lora):
+            print(f"Loading LoRA: {lora}")
             pipe.load_lora(pipe.text_encoder, lora, alpha=1.0)
             pipe.load_lora(pipe.dit, lora, alpha=1.0)
+        else:
+            print(f"Warning: LoRA file {lora} not found, skipping.")
 
     prompt = get_task_prompt(args.task)
     input_img = load_image(args.input_image)
     
     generated_image, intermediate_images = pipe(
         prompt, 
-        edit_image=input_image, 
-        seed=42, 
-        num_inference_steps=50, 
+        edit_image=input_img, 
+        seed=args.seed, 
+        num_inference_steps=args.steps, 
         height=512, 
         width=512,    
         edit_image_auto_resize=False,

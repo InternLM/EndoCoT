@@ -61,7 +61,7 @@ pip install -r requirements.txt
 
    - You may find our pretrained weights at: [**EndoCoT**](https://huggingface.co/InternLM/EndoCoT)
 
-   >  Following the configuration of *[**Diffthinker**](https://github.com/lcqysl/DiffThinker)*, we provide a customized checkpoint for **Qwen-Image-Edit**. This checkpoint has been merged from the original `safetensors` to ensure compatibility with [**Diffsynth-Studio**]([modelscope/DiffSynth-Studio: Enjoy the magic of Diffusion models!](https://github.com/modelscope/DiffSynth-Studio))training. Please use the checkpoint provided in this repository instead of the official version for correct loading and inference.
+   >  Following the configuration of *[**Diffthinker**](https://github.com/lcqysl/DiffThinker)*, we provide a customized checkpoint for **Qwen-Image-Edit**. This checkpoint has been merged from the original `safetensors` to ensure compatibility with*[**Diffsynth-Studio**](https://github.com/modelscope/DiffSynth-Studio)* training. Please use the checkpoint provided in this repository instead of the official version for correct loading and inference.
 
 2. Test Single Case
 
@@ -77,7 +77,7 @@ pip install -r requirements.txt
 
 3. Eval Our Ckpt
 
-   > We follow the exact same setting as *[**Diffthinker**]([lcqysl/DiffThinker: DiffThinker: Towards Generative Multimodal Reasoning with Diffusion Models](https://github.com/lcqysl/DiffThinker))*
+   > We follow the exact same setting as *[**Diffthinker**](https://github.com/lcqysl/DiffThinker)*
 
    ```bash
    cd Maze
