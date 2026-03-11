@@ -1,4 +1,0 @@
-This is a 3x3 map.
-The player is at: row 3, column 1;
-There is no holes in this map;
-The goal is at: Row 2, Column 3.

@@ -18,16 +18,6 @@
 
 # EndoCoT: Scaling Endogenous Chain-of-Thought Reasoning in Diffusion Models
 
-<details open>
-<summary><b>📚 目录</b></summary>
-
-- 📝 [**TODO**](#TODO)
-- 📰 [**News**](#News)
-- 🌟 [**Highlights**](#Highlights)
-- ⚡ [**Quick Start**](#Quick Start)
-- 📖 [**Citation**](#Citation)
-- ⚖️ [**License**](#License)
-
 ## 📝TODO
 
 - [x] Open source the training code
@@ -61,7 +51,7 @@ git clone https://github.com/InternLM/EndoCoT
 cd EndoCoT
 conda create -n EndoCoT
 conda activate EndoCot
-pip install -r requirments.txt
+pip install -r requirements.txt
 # Please install the version of vLLM compatible with your machine.
 ```
 
@@ -71,7 +61,7 @@ pip install -r requirments.txt
 
    - You may find our pretrained weights at: [**EndoCoT**](https://huggingface.co/InternLM/EndoCoT)
 
-   >  Following the configuration of *[**Diffthinker**](https://github.com/lcqysl/DiffThinker)*, we provide a customized checkpoint for **Qwen-Image-Edit**. This checkpoint has been merged from the original `safetensors` to ensure compatibility with [**Diffsynth-Studio** ]([modelscope/DiffSynth-Studio: Enjoy the magic of Diffusion models!](https://github.com/modelscope/DiffSynth-Studio))training. Please use the checkpoint provided in this repository instead of the official version for correct loading and inference.
+   >  Following the configuration of *[**Diffthinker**](https://github.com/lcqysl/DiffThinker)*, we provide a customized checkpoint for **Qwen-Image-Edit**. This checkpoint has been merged from the original `safetensors` to ensure compatibility with [**Diffsynth-Studio**]([modelscope/DiffSynth-Studio: Enjoy the magic of Diffusion models!](https://github.com/modelscope/DiffSynth-Studio))training. Please use the checkpoint provided in this repository instead of the official version for correct loading and inference.
 
 2. Test Single Case
 
