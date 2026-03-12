@@ -7,7 +7,7 @@
   <a href="https://github.com/InternLM/EndoCoT/blob/main/LICENSE"><img src="https://img.shields.io/github/license/InternLM/EndoCoT?style=flat-square&label=License&color=9C27B0"></a>
   <br>
   <a href="https://arxiv.org/abs/xxxx.xxxxx"><img src="https://img.shields.io/badge/Paper-arXiv-B31B1B?style=flat-square"></a>
-  <a href="https://lennoxdai.github.io/EndoCoT-Webpage/"><img src="https://img.shields.io/badge/Homepage-Project-blue?style=flat-square"></a>
+  <a href="https://internlm.github.io/EndoCoT/"><img src="https://img.shields.io/badge/Homepage-Project-blue?style=flat-square"></a>
   <a href="https://huggingface.co/internlm/EndoCoT"><img src="https://img.shields.io/badge/Model-HuggingFace-yellow?style=flat-square"></a>
   <a href="https://huggingface.co/datasets/internlm/EndoCoT-Data"><img src="https://img.shields.io/badge/Dataset-HuggingFace-orange?style=flat-square"></a>
   <br>
@@ -23,14 +23,14 @@
 ## 📝TODO
 
 - [x] Open source the training code
-- [x] Open source the training data
+- [ ] Open source the training data
 - [x] Open source the main task ckpt
 - [ ] Open source the edit model ckpt
 - [ ] Refactor the codebase for better usability and maintainability
 
 ## 📰News
 
-- 🚀 [2026/3/12] We have released the EndoCoT [repository]([InternLM/EndoCoT](https://github.com/InternLM/EndoCoT)).
+- 🚀 [2026/3/12] We have released the EndoCoT [repository](https://github.com/InternLM/EndoCoT) and  [ckpts](https://huggingface.co/internlm).
 
 ## 🌟Highlight
 
