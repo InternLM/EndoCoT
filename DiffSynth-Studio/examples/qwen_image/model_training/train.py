@@ -33,7 +33,7 @@ class QwenImageTrainingModule(DiffusionTrainingModule):
         task="sft",
         zero_cond_t=False,
         text_encoder=None,
-        stage2_training,
+        stage2_training=False,
     ):
         super().__init__()
 

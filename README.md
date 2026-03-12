@@ -7,13 +7,14 @@
   <a href="https://github.com/InternLM/EndoCoT/blob/main/LICENSE"><img src="https://img.shields.io/github/license/InternLM/EndoCoT?style=flat-square&label=License&color=9C27B0"></a>
   <br>
   <a href="https://arxiv.org/abs/xxxx.xxxxx"><img src="https://img.shields.io/badge/Paper-arXiv-B31B1B?style=flat-square"></a>
-  <a href="https://endocot.github.io/"><img src="https://img.shields.io/badge/Homepage-Project-blue?style=flat-square"></a>
-  <a href="https://huggingface.co/InternLM/EndoCoT"><img src="https://img.shields.io/badge/Model-HuggingFace-yellow?style=flat-square"></a>
-  <a href="https://huggingface.co/datasets/InternLM/EndoCoT"><img src="https://img.shields.io/badge/Dataset-HuggingFace-orange?style=flat-square"></a>
+  <a href="https://lennoxdai.github.io/EndoCoT-Webpage/"><img src="https://img.shields.io/badge/Homepage-Project-blue?style=flat-square"></a>
+  <a href="https://huggingface.co/internlm/EndoCoT"><img src="https://img.shields.io/badge/Model-HuggingFace-yellow?style=flat-square"></a>
+  <a href="https://huggingface.co/datasets/internlm/EndoCoT-Data"><img src="https://img.shields.io/badge/Dataset-HuggingFace-orange?style=flat-square"></a>
   <br>
   <br>
   <img src="fig/teaser.png" alt="Teaser" width="100%" style="border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
 </p>
+
 
 
 # EndoCoT: Scaling Endogenous Chain-of-Thought Reasoning in Diffusion Models
@@ -49,8 +50,9 @@
 ```bash
 git clone https://github.com/InternLM/EndoCoT
 cd EndoCoT
-conda create -n EndoCoT
+conda create -n EndoCoT python=3.10
 conda activate EndoCot
+# Please install the version of torch compatible with your machine.
 pip install -r requirements.txt
 # Please install the version of vLLM compatible with your machine.
 ```
@@ -96,10 +98,10 @@ pip install -r requirements.txt
 2. Train your model
 
    ```bash
-   cd DiffSynth-Studio/add/Maze
-   bash stage1.sh
+   cd DiffSynth-Studio
+   bash add/Maze/stage1.sh
    python change_ckpt_prefix.py --src /path/to/the/Maze/save/dir/Maze_stage1	
-   bash stage2.sh
+   bash add/Maze/stage2.sh
    python change_ckpt_prefix.py --src /path/to/the/Maze/save/dir/Maze_stage2
    ```
 
