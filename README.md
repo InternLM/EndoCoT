@@ -6,7 +6,7 @@
   <a href="https://github.com/InternLM/EndoCoT/issues"><img src="https://img.shields.io/github/issues/InternLM/EndoCoT?style=flat-square&logo=github&label=Issues&color=4CAF50"></a>
   <a href="https://github.com/InternLM/EndoCoT/blob/main/LICENSE"><img src="https://img.shields.io/github/license/InternLM/EndoCoT?style=flat-square&label=License&color=9C27B0"></a>
   <br>
-  <a href="https://arxiv.org/abs/xxxx.xxxxx"><img src="https://img.shields.io/badge/Paper-arXiv-B31B1B?style=flat-square"></a>
+  <a href="https://arxiv.org/abs/2603.12252"><img src="https://img.shields.io/badge/Paper-arXiv-B31B1B?style=flat-square"></a>
   <a href="https://internlm.github.io/EndoCoT/"><img src="https://img.shields.io/badge/Homepage-Project-blue?style=flat-square"></a>
   <a href="https://huggingface.co/internlm/EndoCoT"><img src="https://img.shields.io/badge/Model-HuggingFace-yellow?style=flat-square"></a>
   <a href="https://huggingface.co/datasets/internlm/EndoCoT-Data"><img src="https://img.shields.io/badge/Dataset-HuggingFace-orange?style=flat-square"></a>
@@ -14,6 +14,7 @@
   <br>
   <img src="fig/teaser.jpg" alt="Teaser" width="100%" style="border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
 </p>
+
 
 
 
