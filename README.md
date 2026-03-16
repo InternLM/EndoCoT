@@ -12,8 +12,9 @@
   <a href="https://huggingface.co/datasets/internlm/EndoCoT-Data"><img src="https://img.shields.io/badge/Dataset-HuggingFace-orange?style=flat-square"></a>
   <br>
   <br>
-  <img src="fig/teaser.jpg" alt="Teaser" width="100%" style="border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
+  <img src="fig/teaser.png" alt="Teaser" width="100%" style="border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
 </p>
+
 
 
 
