@@ -186,7 +186,12 @@ def encode_prompt_edit(self, pipe: QwenImagePipeline, prompt, edit_image, is_fin
 ## 📖 Citation
 
 ```
-
+@article{dai2026endocot,
+  title={EndoCoT: Scaling Endogenous Chain-of-Thought Reasoning in Diffusion Models},
+  author={Dai, Xuanlang and Zhou, Yujie and Xing, Long and Bu, Jiazi and Wei, Xilin and Liu, Yuhong and Zhang, Beichen and Chen, Kai and Zang, Yuhang},
+  journal={arXiv preprint arXiv:2603.12252},
+  year={2026}
+}
 ```
 
 ## ⚖️ License
