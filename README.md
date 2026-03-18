@@ -25,13 +25,14 @@
 ## 📝TODO
 
 - [x] Open source the training code
-- [ ] Open source the training data
+- [x] Open source the training data
 - [x] Open source the main task ckpt
 - [ ] Open source the edit model ckpt
 - [ ] Refactor the codebase for better usability and maintainability
 
 ## 📰News
 
+- 🚀 [2026/3/18] We have released the [EndoCoT-Data](https://huggingface.co/datasets/internlm/EndoCoT-Data).
 - 🚀 [2026/3/12] We have released the EndoCoT [repository](https://github.com/InternLM/EndoCoT) and  [ckpts](https://huggingface.co/internlm).
 
 ## 🌟Highlight
