@@ -32,6 +32,7 @@
 
 ## 📰News
 
+- 🎉 [2026/6/26] Our paper has been accepted to **ECCV 2026**!
 - 🚀 [2026/3/18] We have released the [EndoCoT-Data](https://huggingface.co/datasets/internlm/EndoCoT-Data).
 - 🚀 [2026/3/12] We have released the EndoCoT [repository](https://github.com/InternLM/EndoCoT) and  [ckpts](https://huggingface.co/internlm).
 
