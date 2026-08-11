@@ -96,7 +96,7 @@ pip install -r requirements.txt
 
 1. Download the datasets & metadata.csv
 
-   - You may find our training data at: [**EndoCoT dataset**](https://huggingface.co/datasets/InternLM/EndoCoT)
+   - You may find our training data at: [**EndoCoT dataset**](https://huggingface.co/datasets/InternLM/EndoCoT-Data)
 
    > Since the metadata uses relative paths, please ensure the dataset files are placed in the same directory as `metadata.csv`
 
